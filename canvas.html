@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas Practice</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		/* http://meyerweb.com/eric/tools/css/reset/ 
+		   v2.0 | 20110126
+		   License: none (public domain)
+		*/
+
+		html, body, div, span, applet, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		a, abbr, acronym, address, big, cite, code,
+		del, dfn, em, img, ins, kbd, q, s, samp,
+		small, strike, strong, sub, sup, tt, var,
+		b, u, i, center,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, embed, 
+		figure, figcaption, footer, header, hgroup, 
+		menu, nav, output, ruby, section, summary,
+		time, mark, audio, video {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font: inherit;
+			vertical-align: baseline;
+		}
+		/* HTML5 display-role reset for older browsers */
+		article, aside, details, figcaption, figure, 
+		footer, header, hgroup, menu, nav, section {
+			display: block;
+		}
+		body {
+			line-height: 1;
+		}
+		ol, ul {
+			list-style: none;
+		}
+		blockquote, q {
+			quotes: none;
+		}
+		blockquote:before, blockquote:after,
+		q:before, q:after {
+			content: '';
+			content: none;
+		}
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+	body{
+		font-family: 'Roboto', sans-serif;
+		background: #ddd;
+	}
+	.header {
+	    height: 50px;
+	    font-size: 25px;
+	    width: 100%;
+	    padding: 12px;
+	    background: #424242;
+	    color: #E0E0E0;
+	}
+	.container{
+		margin: 0 auto;
+		padding: 15px;
+		max-width: 786px;
+		background: #eee;
+	}
+	.fields-container{
+
+	}
+	canvas{
+		border: 1px dashed #ddd;
+	}
+	#upload{
+		margin-bottom: 10px;
+	}
+	.form-field{
+		margin-bottom: 5px;
+	}
+	.form-field > input[type="text"]{
+		display: block;
+		width: 200px;
+		margin-top: 3px;
+		color: #333;
+
+	}
+	.pull-left{
+		float: left;
+	}
+	.save{
+		display: block;
+		padding: 4px 8px;
+		border: none;
+		font-size: 15px;
+		margin-top: 4px;
+	}
+	@media screen and (max-width: 500px){
+		.header{
+			text-align: center;
+		}
+	}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h3 style="margin-top:10px;">MEME Generator</h3>
+	</div>
+	<div class="container">
+		
+	
+		<div class="fields-container">
+			<div class="form-field">
+				<label for="upload">Choose Image: </label>
+				<input type="file" id="upload" class="uploadFile" />
+			</div>	
+			<div class="form-field" style="display: inline-block;">
+				<label for="memeText">Enter Top Line:</label>
+				<input type="text" id="memeText"/>
+			</div>
+			<div class="form-field" style="display: inline-block;">	
+				<label for="bottomTxt">Enter Bottom Line:</label>
+				<input type="text" id="bottomTxt" value=""/>
+			</div>	
+			<div class="form-field ">
+				<button class="save">Save Image</button>
+			</div>
+			<canvas id="sheet" width="500" height="500"></canvas>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var c = document.querySelector('#sheet');
+		var ctx = c.getContext('2d');
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "black";
+		ctx.font = "bold 30pt Roboto";
+		ctx.textAlign = "center";
+		ctx.lineWidth = "3pt";
+		
+		function saveImg(){
+			window.open(c.toDataURL(window.img));
+		}
+		
+		function textListner(evt){
+			var id = evt.target.id;
+			var val = evt.target.value;
+			if (id === "memeText"){
+				window.text = val;
+			}
+			else if(id === "bottomTxt"){
+				window.color = val;
+			}
+			redraw(window.src, window.text, window.color);
+		}
+
+		function fileSelect(evt){
+			console.log('getting called');
+			var cH = 500;
+			var cW = 500;
+			var file = evt.target.files[0];
+
+			var reader = new FileReader();
+			reader.onload = function(obj){
+				var data = obj.target.result;
+
+				var img = new Image();
+
+				img.onload = function(){
+					window.src = this;
+					window.img = img;
+
+					redraw(window.src, null, null);
+				}
+				img.src = obj.target.result;
+			};
+			reader.readAsDataURL(file);
+		}
+
+		function redraw(img, topTxt, bottomTxt){
+			ctx.clearRect(0, 0, c.width, c.height);
+			if (img !== null){
+				var width = 500;
+				var r = window.img.width/window.img.height;
+				var h = width/r;
+				if (h > 500){
+					h = 500;
+				}
+				ctx.drawImage(img, 0,0,width, h);
+			}
+			
+			if(topTxt !== null){
+				ctx.fillText(topTxt,width/2,40);
+				ctx.strokeText(topTxt, width/2, 40);
+			}
+			if(bottomTxt !== null && bottomTxt !== undefined){
+				ctx.fillText(bottomTxt,width/2,h-20);
+				ctx.strokeText(bottomTxt, width/2, h -20);
+			}
+		}
+
+		var memeText = document.getElementById('memeText');
+		var bottomTxt = document.getElementById('bottomTxt');
+		memeText.oninput = textListner;
+		bottomTxt.oninput = textListner;
+		document.querySelector('button').addEventListener('click',saveImg, false);
+		document.querySelector('#upload').addEventListener('change',fileSelect,false);
+	</script>
+</body>
+</html>
