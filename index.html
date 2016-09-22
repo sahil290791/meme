@@ -19,23 +19,23 @@
 			<div class="form-field">
 				<label for="upload">Choose an Image: </label>
 				<input type="file" id="upload" class="uploadFile" />
-			</div>	
+			</div>
 			<div class="textSetup">
 				<h4>Text Settings:</h4>
 				<div class="form-field block" >
 					<label for="topText">Enter Top Line:</label>
 					<input type="text" id="topText" placeholder="Text to be placed at the top" />
 				</div>
-				<div class="form-field block">	
+				<div class="form-field block">
 					<label for="bottomTxt">Enter Bottom Line:</label>
 					<input type="text" id="bottomTxt" value="" placeholder="Text to be placed at the bottom"/>
-				</div>	
-				<div class="form-field">	
+				</div>
+				<div class="form-field">
 					<label for="textHeight">Adjust Font Size:</label>
 					<input type="range" id="textHeight" value="30" max="60" min="5" step="5" />
-				</div>	
+				</div>
 			</div>
-			
+
 			<div class="imageSetup">
 				<h4>Picture Settings:</h4>
 				<div class="form-field filterType">
@@ -43,19 +43,19 @@
 					<label for="presets"><input type="radio" id="presets" name="filterType" value="presets"> Presets</label>
 					<label for="diy"><input type="radio" id="diy" name="filterType" value="diy"> DIY</label>
 				</div>
-				<div class="form-field presets">	
+				<div class="form-field presets">
 					<label>Apply image filter:</label><br/>
 						<label for="greyscale"><input type="radio" name="filter" id="greyscale" class="radio" value="greyscale" />GreyScale</label>
 						<label for="red"><input type="radio" name="filter" id="red" class="radio" value="red" />Red</label>
 						<label for="green"><input type="radio" name="filter" id="green" class="radio" value="green" />Green</label>
 						<label for="blue"><input type="radio" name="filter" id="blue" class="radio" value="blue" />Blue</label>
 						<label for="reset"><input type="radio" name="filter" id="reset" class="radio" value="reset" />Reset Filter</label>
-				</div>	
-				<div class="form-field diy">	
+				</div>
+				<div class="form-field diy">
 					<label>Change RGBA values:</label>
 					<div>
 						R: <input type="range" name="filter" id="r" class="rgba" min="0" max="1" step="0.1" value="1"/>
-					</div>	
+					</div>
 					<div>
 						G: <input type="range" name="filter" id="g" class="rgba" min="0" max="1" step="0.1" value="1"/>
 					</div>
@@ -65,7 +65,7 @@
 					<div>
 						A: <input type="range" name="filter" id="a" class="rgba" min="0" max="1" step="0.1" value="1"/>
 					</div>
-				</div>	
+				</div>
 			</div>
 			<div class="form-field saveImg">
 				<button class="save">Save Image</button>
